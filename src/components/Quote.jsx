@@ -1,23 +1,14 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
+import { useQuery } from '@tanstack/react-query';
+import getQuote from './getQuoteApi';
+
 
 export default function Quote() {
-    const [quote, setQuote] = useState('');
-
-    useEffect(() => {
-    async function fetchQuote() {
-        const response = await axios.get('https://jsonplaceholder.typicode.com/todos/1');
-        console.log(response.data);
-        setQuote(response.data);
-    }
-    fetchQuote();
-  }, []);
+  const { data } = useQuery("quote", () => getQuote());
 
   return (
     <div>
-        <h2>Quote of the Day</h2>
-        <p>{quote.title || 'Loading...'}</p>
-        <p>{quote.id || 'Loading...'}</p>
+        <p>{data?.title || 'Loading...'}</p>
+        <p>{data?.id || 'Loading...'}</p>
     </div>
   );
 }
