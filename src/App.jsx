@@ -1,16 +1,14 @@
-import Quote from "./components/Quote";
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { signal } from '@preact/signals-react'
 
 
 function App() {
-  const Client = new QueryClient();
+  const count = signal(0)
 
   return (
-    <div className="App">
-      <QueryClientProvider client={Client}>
-        <Quote />
-        <Quote />
-      </QueryClientProvider>
+    <div>
+      <h1>Counter: {count}</h1>
+      <button onClick={() => count.value += 5}>Increment</button>
+      <button onClick={() => count.value -= 5}>Decrement</button>
     </div>
   )
 }
